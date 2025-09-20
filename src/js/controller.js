@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -22,8 +23,19 @@ async function showRecipes() {
     recipeView.renderError();
   }
 }
+async function searchRecipes() {
+  try {
+    const query = searchView.getQuery();
+    if (!query) return;
+    await model.loadSearchResults(query);
+    searchView.render(model.state.search.result);
+  } catch (err) {
+    console.log(err);
+  }
+}
 function init() {
   recipeView.addHandlerRender(showRecipes);
+  searchView.addHandlerSearch(searchRecipes);
 }
 init();
 //hashchange: when ever url # changes http://localhost:1234/#664c8f193e7aa067e94e84c2 this  #664c8f193e7aa067e94e84c2
