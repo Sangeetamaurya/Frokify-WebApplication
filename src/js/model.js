@@ -1,4 +1,4 @@
-import { API_URL } from './config';
+import { API_URL, RecipePerPage } from './config';
 import { fetchRecipe } from './helpers';
 
 export const state = {
@@ -6,6 +6,8 @@ export const state = {
   search: {
     query: '',
     result: [],
+    page: 1,
+    resultPerPage: RecipePerPage,
   },
 };
 export async function laodRecipes(id) {
@@ -38,8 +40,12 @@ export async function loadSearchResults(query) {
         image: rec.image_url,
       };
     });
-    // console.log(state.search.result);
   } catch (err) {
     throw err;
   }
+}
+export function getSearchResultsPage(page = state.search.page) {
+  const start = (page - 1) * state.search.resultPerPage;
+  const end = page * state.search.resultPerPage;
+  return state.search.result.slice(start, end);
 }
