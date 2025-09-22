@@ -11,11 +11,11 @@ export default class View {
   _clear() {
     this._parentElement.innerHTML = '';
   }
-  renderSpinnner() {
+  renderSpinner() {
     const markup = `
               <div class="spinner">
                 <svg>
-                  <use href="${icons}$$#icon-loader"></use>
+                  <use href="${icons}$#icon-loader"></use>
                 </svg>
               </div>`;
     this._clear();
