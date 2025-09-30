@@ -15,7 +15,14 @@ class recipeView extends View {
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
     //hashchange: when ever url # changes http://localhost:1234/#664c8f193e7aa067e94e84c2 this  #664c8f193e7aa067e94e84c2
-
+  }
+  addHandlerUpdateServings(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--tiny');
+      if (!btn) return;
+      const { updateTo } = btn.dataset; //updateTo=btn.dataset.updateTo  -its just written in simple way 
+      if (+updateTo > 0) handler(+updateTo);
+    });
   }
 
   _generateMarkup() {
@@ -48,12 +55,16 @@ class recipeView extends View {
                     <span class="recipe__info-text">servings</span>
         
                     <div class="recipe__info-buttons">
-                      <button class="btn--tiny btn--increase-servings">
+                      <button class="btn--tiny" data-update-to="${
+                        this._data.servings - 1
+                      }">
                         <svg>
                           <use href="${icons}#icon-minus-circle"></use>
                         </svg>
                       </button>
-                      <button class="btn--tiny btn--increase-servings">
+                      <button class="btn--tiny" data-update-to="${
+                        this._data.servings + 1
+                      }">
                         <svg>
                           <use href="${icons}#icon-plus-circle"></use>
                         </svg>

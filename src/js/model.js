@@ -51,3 +51,13 @@ export function getSearchResultsPage(page = state.search.page) {
   const end = page * state.search.resultPerPage;
   return state.search.result.slice(start, end);
 }
+export const updateServings = function (newServings) {
+  state.recipe.ingredients.forEach(ing => {
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+    // newQt = oldQt * newServings / oldServings // 2 * 8 / 4 = 4
+    //if oldQT =2 and oldServing is 4 and new serving is 8 like double so the Qt 
+    // should be double thats why 2*8/4=4 newQt will be 4 like double 
+  });
+
+  state.recipe.servings = newServings;
+};
